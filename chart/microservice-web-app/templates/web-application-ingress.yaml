@@ -3,7 +3,9 @@ kind: Ingress
 metadata:
   annotations:
     ingress.kubernetes.io/rewrite-target: /
-  name: web-application-ingress
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   rules:
   - host: 
