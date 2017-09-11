@@ -12,8 +12,8 @@ spec:
         name: webapp-deployment
     spec:
       containers:
-      - name: microservice-webapp
-        image: {{ default "microservice-web-app:latest" .Values.image }}
+      - name: web-application
+        image: {{ default "web-application:latest" .Values.image }}
         ports:
           - containerPort: 9080
         imagePullPolicy: IfNotPresent
