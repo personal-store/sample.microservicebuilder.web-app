@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: web-application
-        image: {{ default "web-application:latest" .Values.image }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         ports:
           - containerPort: 9080
         imagePullPolicy: IfNotPresent
