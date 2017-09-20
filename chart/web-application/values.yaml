@@ -1,1 +1,4 @@
+image:
+  repository: "web-application"
+  tag: "latest"
 test: false
