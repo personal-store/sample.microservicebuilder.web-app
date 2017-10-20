@@ -3,7 +3,8 @@
 # This application has Fabric and ELK sample dependency.
 # Make sure those are deployed prior to executing this script.
 
-docker rmi "$(docker images -f "dangling=true" -q)"
+docker rm -v $(docker ps -a -q -f "status=exited")
+docker rmi $(docker images -f "dangling=true" -q)
 
 echo "Delete and Install web-application"
 cd "$(dirname "$0")"
@@ -58,4 +59,5 @@ docker rmi -f microservice-vote
 docker build -t microservice-vote .
 helm install --name=vote chart/microservice-vote
 
-docker rmi "$(docker images -f "dangling=true" -q)"
+docker rm -v $(docker ps -a -q -f "status=exited")
+docker rmi $(docker images -f "dangling=true" -q)

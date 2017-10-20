@@ -1,6 +1,9 @@
 #!/bin/bash
 
-docker rmi "$(docker images -f "dangling=true" -q)"
+# This script uninstalls helm charts, clean maven artifacts and also removes docker images.
+
+docker rm -v $(docker ps -a -q -f "status=exited")
+docker rmi $(docker images -f "dangling=true" -q)
 
 echo "Delete web-application"
 cd "$(dirname "$0")"
@@ -45,4 +48,5 @@ sleep 30
 mvn clean
 docker rmi -f microservice-vote
 
-docker rmi "$(docker images -f "dangling=true" -q)"
+docker rm -v $(docker ps -a -q -f "status=exited")
+docker rmi $(docker images -f "dangling=true" -q)
