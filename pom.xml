@@ -148,6 +148,7 @@
     </build>
   </profile>
       <!--Power PC Archtecture devices will not build WAR file here, but it will be curled in at docker build. This intentionally does nothing-->
+
       <profile>
         <id>PowerPC</id>
         <activation>
@@ -159,6 +160,25 @@
           <plugins>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-antrun-plugin</artifactId>
+              <version>1.7</version>
+              <executions>
+                <execution>
+                  <phase>generate-test-sources</phase>
+                  <configuration>
+                    <tasks>
+                      <echo message="Creating Target" />
+                      <mkdir dir="./target" />
+                    </tasks>
+                  </configuration>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-war-plugin</artifactId>
               <version>3.0.0</version>
               <configuration>
@@ -168,6 +188,8 @@
           </plugins>
         </build>
       </profile>
+
+
         <profile>
             <id>security</id>
             <properties>
