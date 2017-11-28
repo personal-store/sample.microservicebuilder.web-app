@@ -16,15 +16,20 @@
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>sample.microservicebuilder</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <artifactId>web-application</artifactId>
     <name>Conference :: Web</name>
     <packaging>war</packaging>
-
+    <profiles>
+      <profile>
+        <id>Linux_x86</id>
+        <activation>
+          <os>
+            <arch>!ppc64le</arch>
+          </os>
+        </activation>
     <dependencies>
       <dependency>
             <groupId>org.apache.tomee</groupId>
@@ -51,7 +56,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
           <plugin>
@@ -71,7 +75,6 @@
                 </images>
               </configuration>
             </plugin>
-
             <!--Deals with npm, bower and gulp-->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -116,7 +119,6 @@
                     <workingDirectory>src/main/static</workingDirectory>
                 </configuration>
             </plugin>
-
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
@@ -131,7 +133,6 @@
                 </webResources>
             </configuration>
         </plugin>
-
         <plugin>
             <artifactId>maven-clean-plugin</artifactId>
             <version>3.0.0</version>
@@ -145,8 +146,50 @@
         </plugin>
         </plugins>
     </build>
+  </profile>
+      <!--Power PC Architecture devices will not build a WAR file here: it will be curled in at docker build. The target/ directory must exist for the Dockerfile to work correctly. -->
 
-    <profiles>
+      <profile>
+        <id>PowerPC</id>
+        <activation>
+          <os>
+            <arch>ppc64le</arch>
+          </os>
+        </activation>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-antrun-plugin</artifactId>
+              <version>1.7</version>
+              <executions>
+                <execution>
+                  <phase>generate-test-sources</phase>
+                  <configuration>
+                    <tasks>
+                      <echo message="Creating Target" />
+                      <mkdir dir="./target" />
+                    </tasks>
+                  </configuration>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-war-plugin</artifactId>
+              <version>3.0.0</version>
+              <configuration>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+
+
         <profile>
             <id>security</id>
             <properties>
@@ -175,5 +218,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
