@@ -147,7 +147,7 @@
         </plugins>
     </build>
   </profile>
-      <!--Power PC Archtecture devices will not build WAR file here, but it will be curled in at docker build. This intentionally does nothing-->
+      <!--Power PC Architecture devices will not build a WAR file here: it will be curled in at docker build. The target/ directory must exist for the Dockerfile to work correctly. -->
 
       <profile>
         <id>PowerPC</id>
