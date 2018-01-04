@@ -16,6 +16,21 @@
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <repositories>
+      <repository>
+        <id>alimaven</id>
+        <name>aliyun maven</name>
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      </repository>
+      <repository>
+        <id>jcenter</id>
+        <name>jcenter Repository</name>
+        <url>http://jcenter.bintray.com/</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+      </repository>
+    </repositories>
     <modelVersion>4.0.0</modelVersion>
     <groupId>sample.microservicebuilder</groupId>
     <version>1.0.0-SNAPSHOT</version>
